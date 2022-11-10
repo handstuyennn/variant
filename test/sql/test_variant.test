@@ -1,0 +1,19 @@
+# name: test/sql/test_variant.test
+# description: VARIANT tests
+# group: [sql]
+
+statement ok
+PRAGMA enable_verification
+
+statement ok
+CREATE TABLE variants (v VARIANT);
+
+# Insert valid variant
+statement ok
+INSERT INTO variants VALUES(variant(123)), (variant(DATE '1992-09-20'))
+
+query T
+SELECT * FROM variants
+----
+{'__type': INT64, '__value': 123}
+{'__type': DATE, '__value': "1992-09-20"}
